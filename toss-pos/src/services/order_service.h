@@ -11,7 +11,7 @@ class OrderModel;
 class OrderService : public QObject
 {
     Q_OBJECT
-    QML_ELEMENT
+    // Note: Registered as singleton via qmlRegisterSingletonInstance() in main.cpp
 
 public:
     // orderModel: non-owning pointer, caller retains ownership

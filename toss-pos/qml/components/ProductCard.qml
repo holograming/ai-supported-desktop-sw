@@ -1,11 +1,11 @@
 import QtQuick
 import QtQuick.Layouts
-import "../theme"
+import TossPos 1.0
 
 TossCard {
     id: root
 
-    // Required properties
+    // Required properties - injected by model when used as delegate
     required property int productId
     required property string name
     required property int price

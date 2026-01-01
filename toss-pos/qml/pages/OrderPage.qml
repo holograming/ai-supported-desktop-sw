@@ -2,8 +2,6 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import TossPos 1.0
-import "../theme"
-import "../components"
 
 Item {
     id: root
@@ -92,16 +90,12 @@ Item {
                     model: ProductModel
 
                     delegate: ProductCard {
-                        // required properties from model (auto-injected by ListView)
-                        required property int productId
-                        required property string name
-                        required property int price
+                        // index is auto-injected by model for delegate position
                         required property int index
 
                         width: productGrid.cellWidth - TossTheme.spacingSm
                         height: productGrid.cellHeight - TossTheme.spacingSm
 
-                        // required properties are directly bound, no self-assignment needed
                         categoryIndex: root.currentCategoryIndex > 0 ? root.currentCategoryIndex - 1 : index % 4
 
                         onAddToCart: {

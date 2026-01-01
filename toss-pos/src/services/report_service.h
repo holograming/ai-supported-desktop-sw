@@ -11,7 +11,7 @@ namespace tosspos {
 class ReportService : public QObject
 {
     Q_OBJECT
-    QML_ELEMENT
+    // Note: Registered as singleton via qmlRegisterSingletonInstance() in main.cpp
 
     Q_PROPERTY(QDate currentDate READ currentDate WRITE setCurrentDate NOTIFY currentDateChanged)
     Q_PROPERTY(int totalSales READ totalSales NOTIFY reportChanged)

@@ -9,7 +9,7 @@ namespace tosspos {
 class CategoryModel : public QAbstractListModel
 {
     Q_OBJECT
-    QML_ELEMENT
+    // Note: Registered as singleton via qmlRegisterSingletonInstance() in main.cpp
 
     Q_PROPERTY(int count READ count NOTIFY countChanged)
 

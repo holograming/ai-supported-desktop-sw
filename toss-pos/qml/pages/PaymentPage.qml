@@ -2,8 +2,6 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import TossPos 1.0
-import "../theme"
-import "../components"
 
 Item {
     id: root

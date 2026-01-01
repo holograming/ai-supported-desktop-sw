@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import "../theme"
+import TossPos 1.0
 
 Button {
     id: root

@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
-import "../theme"
+import TossPos 1.0
 
 Rectangle {
     id: root

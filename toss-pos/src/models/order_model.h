@@ -9,7 +9,7 @@ namespace tosspos {
 class OrderModel : public QAbstractListModel
 {
     Q_OBJECT
-    QML_ELEMENT
+    // Note: Registered as singleton via qmlRegisterSingletonInstance() in main.cpp
 
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(int totalAmount READ totalAmount NOTIFY totalAmountChanged)

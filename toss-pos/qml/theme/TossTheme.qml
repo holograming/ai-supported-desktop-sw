@@ -47,6 +47,11 @@ QtObject {
     readonly property int radiusFull: 9999
 
     // Typography
+    readonly property string fontFamily: {
+        if (Qt.platform.os === "osx") return "Apple SD Gothic Neo"
+        if (Qt.platform.os === "windows") return "Malgun Gothic"
+        return "Noto Sans CJK KR"
+    }
     readonly property int fontSizeXs: 11
     readonly property int fontSizeSm: 13
     readonly property int fontSizeMd: 15

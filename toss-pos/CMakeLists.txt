@@ -7,6 +7,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+# UTF-8 인코딩 설정
+if(MSVC)
+    add_compile_options(/utf-8)
+endif()
+
 # Qt 패키지 찾기
 find_package(Qt6 6.5 REQUIRED COMPONENTS
     Core
@@ -15,6 +20,12 @@ find_package(Qt6 6.5 REQUIRED COMPONENTS
     QuickControls2
     Sql
 )
+
+# Qt5Compat (DropShadow 등 GraphicalEffects 사용)
+find_package(Qt6 COMPONENTS Qt5Compat QUIET)
+if(Qt6Qt5Compat_FOUND)
+    set(HAS_GRAPHICAL_EFFECTS TRUE)
+endif()
 
 qt_standard_project_setup(REQUIRES 6.5)
 
@@ -67,6 +78,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::QuickControls2
     Qt6::Sql
 )
+
+# Qt5Compat 링크 (있는 경우)
+if(HAS_GRAPHICAL_EFFECTS)
+    target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Qt5Compat)
+endif()
 
 # Include 경로 설정
 target_include_directories(${PROJECT_NAME} PRIVATE

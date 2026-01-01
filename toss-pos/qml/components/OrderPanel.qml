@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import TossPos 1.0
-import "../theme"
 
 Rectangle {
     id: root
@@ -109,13 +108,7 @@ Rectangle {
             }
 
             delegate: OrderItemRow {
-                // required properties from model (Qt6 recommended pattern)
-                required property int index
-                required property string productName
-                required property int quantity
-                required property int unitPrice
-                required property int subtotal
-
+                // Model injects directly into OrderItemRow's required properties
                 width: orderList.width
 
                 onIncreaseClicked: OrderModel.increaseQuantity(index)

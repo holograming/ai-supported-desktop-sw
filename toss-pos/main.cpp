@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
+#include <QFont>
 
 #include "src/database/db_manager.h"
 #include "src/models/category_model.h"
@@ -19,8 +20,20 @@ int main(int argc, char *argv[])
     app.setOrganizationName(QStringLiteral("TossPlace"));
     app.setOrganizationDomain(QStringLiteral("tossplace.com"));
 
-    // Material 스타일 설정
-    QQuickStyle::setStyle(QStringLiteral("Material"));
+    // 한글 폰트 설정
+    QFont defaultFont;
+#ifdef Q_OS_MAC
+    defaultFont.setFamily(QStringLiteral("Apple SD Gothic Neo"));
+#elif defined(Q_OS_WIN)
+    defaultFont.setFamily(QStringLiteral("Malgun Gothic"));
+#else
+    defaultFont.setFamily(QStringLiteral("Noto Sans CJK KR"));
+#endif
+    defaultFont.setPixelSize(14);
+    app.setFont(defaultFont);
+
+    // Material 스타일 설정 (Basic으로 변경하여 커스텀 테마 사용)
+    QQuickStyle::setStyle(QStringLiteral("Basic"));
 
     // 데이터베이스 초기화
     tosspos::DatabaseManager& dbManager = tosspos::DatabaseManager::instance();
@@ -45,6 +58,9 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonInstance("TossPos", 1, 0, "OrderModel", orderModel);
     qmlRegisterSingletonInstance("TossPos", 1, 0, "OrderService", orderService);
     qmlRegisterSingletonInstance("TossPos", 1, 0, "ReportService", reportService);
+
+    // QML 모듈 import 경로 설정 (qrc에서 qmldir 찾기)
+    engine.addImportPath(QStringLiteral("qrc:/"));
 
     // QML 로드
     const QUrl url(QStringLiteral("qrc:/qml/Main.qml"));
