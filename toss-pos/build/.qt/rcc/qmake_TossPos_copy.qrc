@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/TossPos">
+    <file alias="qmldir">/Users/devman/Dev/cpp-claude/openspec-qt/toss-pos/build/TossPos/qmldir</file>
+  </qresource>
+</RCC>
+

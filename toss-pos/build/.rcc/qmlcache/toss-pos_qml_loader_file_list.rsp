@@ -1,0 +1,17 @@
+--resource
+/Users/devman/Dev/cpp-claude/openspec-qt/toss-pos/build/.qt/rcc/qmake_TossPos.qrc
+--resource
+/Users/devman/Dev/cpp-claude/openspec-qt/toss-pos/build/.qt/rcc/qmake_TossPos_copy.qrc
+--resource
+/Users/devman/Dev/cpp-claude/openspec-qt/toss-pos/build/.qt/rcc/toss-pos_raw_qml_0.qrc
+/qml/Main.qml
+/qml/theme/TossTheme.qml
+/qml/pages/OrderPage.qml
+/qml/pages/PaymentPage.qml
+/qml/pages/ReportPage.qml
+/qml/components/TossButton.qml
+/qml/components/TossCard.qml
+/qml/components/ProductCard.qml
+/qml/components/CategoryBar.qml
+/qml/components/OrderPanel.qml
+/qml/components/OrderItemRow.qml

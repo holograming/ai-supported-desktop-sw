@@ -1,0 +1,12 @@
+-I
+/Users/devman/Dev/cpp-claude/openspec-qt/toss-pos/build
+-I
+/opt/homebrew/share/qt/qml
+--resource
+/Users/devman/Dev/cpp-claude/openspec-qt/toss-pos/build/.qt/rcc/qmake_TossPos.qrc
+--resource
+/Users/devman/Dev/cpp-claude/openspec-qt/toss-pos/build/.qt/rcc/qmake_TossPos_copy.qrc
+--resource
+/Users/devman/Dev/cpp-claude/openspec-qt/toss-pos/build/.qt/rcc/toss-pos_raw_qml_0.qrc
+--module
+TossPos

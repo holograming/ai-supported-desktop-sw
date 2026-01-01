@@ -1,0 +1,15 @@
+module TossPos
+typeinfo toss-pos.qmltypes
+prefer :/
+Main 1.0 qml/Main.qml
+singleton TossTheme 1.0 qml/theme/TossTheme.qml
+OrderPage 1.0 qml/pages/OrderPage.qml
+PaymentPage 1.0 qml/pages/PaymentPage.qml
+ReportPage 1.0 qml/pages/ReportPage.qml
+TossButton 1.0 qml/components/TossButton.qml
+TossCard 1.0 qml/components/TossCard.qml
+ProductCard 1.0 qml/components/ProductCard.qml
+CategoryBar 1.0 qml/components/CategoryBar.qml
+OrderPanel 1.0 qml/components/OrderPanel.qml
+OrderItemRow 1.0 qml/components/OrderItemRow.qml
+

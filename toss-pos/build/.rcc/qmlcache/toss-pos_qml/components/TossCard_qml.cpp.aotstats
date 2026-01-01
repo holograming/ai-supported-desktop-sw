@@ -1,0 +1,164 @@
+[
+    {
+        "moduleFiles": [
+            {
+                "entries": [
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 12,
+                        "durationMicroseconds": 771,
+                        "errorMessage": "Cannot load property surface from const QMetaObject.",
+                        "functionName": "color",
+                        "line": 17
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 13,
+                        "durationMicroseconds": 16,
+                        "errorMessage": "Cannot load property radiusLg from const QMetaObject.",
+                        "functionName": "radius",
+                        "line": 18
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 21,
+                        "durationMicroseconds": 36,
+                        "errorMessage": "Cannot access value for name root",
+                        "functionName": "radius",
+                        "line": 26
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 27,
+                        "durationMicroseconds": 55,
+                        "errorMessage": "",
+                        "functionName": "fill",
+                        "line": 24
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 27,
+                        "durationMicroseconds": 16,
+                        "errorMessage": "Cannot load property border from const QMetaObject.",
+                        "functionName": "color",
+                        "line": 29
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 23,
+                        "durationMicroseconds": 30,
+                        "errorMessage": "",
+                        "functionName": "fill",
+                        "line": 36
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 17,
+                        "durationMicroseconds": 43,
+                        "errorMessage": "Cannot load property radius from (component in /Users/devman/Dev/cpp-claude/openspec-qt/toss-pos/qml/components/TossCard.qml)::parent with type QQuickItem.",
+                        "functionName": "radius",
+                        "line": 42
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 16,
+                        "durationMicroseconds": 52,
+                        "errorMessage": "Cannot load property textPrimary from const QMetaObject.",
+                        "functionName": "color",
+                        "line": 43
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 18,
+                        "durationMicroseconds": 132,
+                        "errorMessage": "",
+                        "functionName": "opacity",
+                        "line": 45
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 18,
+                        "durationMicroseconds": 82,
+                        "errorMessage": "",
+                        "functionName": "visible",
+                        "line": 46
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 23,
+                        "durationMicroseconds": 27,
+                        "errorMessage": "",
+                        "functionName": "fill",
+                        "line": 41
+                    },
+                    {
+                        "codegenSuccessfull": false,
+                        "column": 41,
+                        "durationMicroseconds": 16,
+                        "errorMessage": "Cannot load property animationFast from const QMetaObject.",
+                        "functionName": "duration",
+                        "line": 49
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 18,
+                        "durationMicroseconds": 80,
+                        "errorMessage": "",
+                        "functionName": "enabled",
+                        "line": 56
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 23,
+                        "durationMicroseconds": 38,
+                        "errorMessage": "",
+                        "functionName": "hoverEnabled",
+                        "line": 57
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 22,
+                        "durationMicroseconds": 152,
+                        "errorMessage": "",
+                        "functionName": "cursorShape",
+                        "line": 58
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 20,
+                        "durationMicroseconds": 66,
+                        "errorMessage": "",
+                        "functionName": "onClicked",
+                        "line": 60
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 20,
+                        "durationMicroseconds": 54,
+                        "errorMessage": "",
+                        "functionName": "onPressed",
+                        "line": 61
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 21,
+                        "durationMicroseconds": 67,
+                        "errorMessage": "",
+                        "functionName": "onReleased",
+                        "line": 62
+                    },
+                    {
+                        "codegenSuccessfull": true,
+                        "column": 23,
+                        "durationMicroseconds": 37,
+                        "errorMessage": "",
+                        "functionName": "fill",
+                        "line": 55
+                    }
+                ],
+                "filepath": "/Users/devman/Dev/cpp-claude/openspec-qt/toss-pos/qml/components/TossCard.qml"
+            }
+        ],
+        "moduleId": "TossPos(toss-pos)"
+    }
+]

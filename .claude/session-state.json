@@ -1,35 +1,32 @@
 {
-  "mode": "quick",
-  "saved_at": "2026-01-01T16:30:00",
+  "mode": "full",
+  "saved_at": "2026-01-02T10:00:00",
   "git_branch": "main",
-  "git_commit": "1aa5799",
+  "git_commit": "a647174",
   "git_pushed": false,
   "openspec": null,
   "openspec_status": null,
-  "working_on": "에이전트 워크플로우 시스템 구축 완료",
+  "working_on": "OpenSpec #add-toss-pos-app 종료 완료",
   "next_steps": [
-    "Git 커밋 (orchestrator 규칙 추가)",
-    "Mock 모드로 워크플로우 테스트",
-    "Spec/세션 자동 업데이트 방식 결정"
+    "Git 커밋 (feat: TossPlace POS 앱 구현)",
+    "아카이브 이동 검토",
+    "새 태스크 시작"
   ],
   "blocker": null,
   "completed_tasks": [
-    "CLAUDE.md - 한글 응답 규칙, 에이전트 디스패치 규칙 추가",
-    ".claude/settings.json - UserPromptSubmit 훅 설정",
-    ".claude/workflow.json - 에이전트 트리거 정의",
-    ".claude/hooks/validate_triggers.py - 트리거 감지 스크립트",
-    "Git 초기화 및 첫 커밋",
-    "workflow.json - protocol, rules, limits 섹션 추가",
-    "8개 에이전트 프로필에 WORKFLOW_STATUS 블록 추가",
-    "orchestrator/ 디렉토리 및 6개 모듈 생성"
+    "toss-pos/ 디렉토리 생성 및 프로젝트 설정",
+    "토스 디자인 시스템 QML 컴포넌트 구현",
+    "SQLite 데이터베이스 연동",
+    "상품/카테고리/주문 모델 구현",
+    "주문/결제/매출 조회 UI 구현",
+    "비즈니스 로직 구현",
+    "통합 테스트 완료",
+    "코드 리뷰 통과 (8/10점)"
   ],
-  "pending_tasks": [
-    "Git 커밋",
-    "워크플로우 테스트"
-  ],
+  "pending_tasks": [],
   "task_progress": {
-    "completed": 8,
-    "total": 10,
-    "percentage": 80
+    "completed": 60,
+    "total": 60,
+    "percentage": 100
   }
 }
