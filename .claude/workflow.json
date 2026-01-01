@@ -1,0 +1,140 @@
+{
+  "workflow": {
+    "name": "openspec-qt-workflow",
+    "version": "1.0",
+    "description": "OpenSpec 기반 C++/QML 프로젝트 워크플로우",
+
+    "triggers": {
+      "task-manager": [
+        "session",
+        "새 태스크",
+        "new task",
+        "태스크 생성",
+        "continue task",
+        "계속",
+        "이어서",
+        "status",
+        "상태",
+        "진행상황",
+        "태스크 종료",
+        "close task",
+        "완료",
+        "달미"
+      ],
+      "architect": [
+        "설계",
+        "design",
+        "분석",
+        "analyze",
+        "어떻게 구현",
+        "how to implement",
+        "구조",
+        "architecture",
+        "도산"
+      ],
+      "designer": [
+        "UI",
+        "UX",
+        "화면",
+        "레이아웃",
+        "layout",
+        "컴포넌트 디자인",
+        "component design",
+        "디자인",
+        "목업",
+        "mockup",
+        "wireframe",
+        "사하"
+      ],
+      "code-writer": [
+        "작성",
+        "write",
+        "구현",
+        "implement",
+        "새 클래스",
+        "new class",
+        "새 파일",
+        "new file",
+        "create",
+        "생성",
+        "용산"
+      ],
+      "code-editor": [
+        "수정",
+        "변경",
+        "고쳐",
+        "fix",
+        "modify",
+        "change",
+        "refactor",
+        "리팩토링",
+        "업데이트",
+        "update",
+        "edit",
+        "철산"
+      ],
+      "code-reviewer": [
+        "리뷰",
+        "review",
+        "검토",
+        "check",
+        "코드 확인",
+        "before commit",
+        "커밋 전",
+        "영실"
+      ],
+      "tester": [
+        "테스트",
+        "test",
+        "빌드",
+        "build",
+        "실행",
+        "run",
+        "검증",
+        "verify",
+        "지평"
+      ],
+      "devops": [
+        "CI",
+        "CD",
+        "pipeline",
+        "GitHub Actions",
+        "workflow failed",
+        "build failed",
+        "deploy",
+        "CI 실패",
+        "CI 수정",
+        "fix CI",
+        "인재"
+      ]
+    },
+
+    "auto_actions": {
+      "auto_commit": {
+        "patterns": [
+          "테스트 OK",
+          "테스트 통과",
+          "빌드 OK",
+          "확인 완료",
+          "괜찮아",
+          "좋아",
+          "승인",
+          "LGTM",
+          "looks good",
+          "approved"
+        ],
+        "action": "자동 커밋 (묻지 않고)"
+      },
+      "auto_save_session": {
+        "patterns": [
+          "세션 종료",
+          "저장하고 끝",
+          "오늘 끝",
+          "end session",
+          "save and quit"
+        ],
+        "action": "자동 세션 저장"
+      }
+    }
+  }
+}

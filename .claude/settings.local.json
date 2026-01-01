@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__serena__list_dir",
+      "WebSearch",
+      "Bash(mkdir:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(openspec archive:*)",
+      "Bash(openspec validate:*)",
+      "Bash(openspec list:*)",
+      "Bash(chmod:*)",
+      "Bash(git init:*)"
+    ]
+  }
+}
