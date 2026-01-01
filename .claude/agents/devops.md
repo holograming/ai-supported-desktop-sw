@@ -33,9 +33,9 @@ CI/CD 문제를 해결하지만 애플리케이션 기능 구현은 하지 않�
 ### 워크플로우 파일
 ```
 .github/workflows/
-├── ci-windows.yml    # Windows 빌드 (MSVC + vcpkg)
-├── ci-linux.yml      # Linux 빌드 (GCC + vcpkg)
-└── claude-review.yml # Claude 코드 리뷰 (옵션)
++-- ci-windows.yml    # Windows 빌드 (MSVC + vcpkg)
++-- ci-linux.yml      # Linux 빌드 (GCC + vcpkg)
++-- claude-review.yml # Claude 코드 리뷰 (옵션)
 ```
 
 ### 빌드 시스템
@@ -162,52 +162,84 @@ strategy:
 
 ---
 
+## WORKFLOW STATUS OUTPUT
+
+**모든 응답 끝에 반드시 다음 형식으로 상태를 출력합니다:**
+
+### 진단/수정 완료 시:
+```
+===============================================================
+[WORKFLOW_STATUS]
+status: READY
+context: CI diagnosis/fix complete
+next_hint: commit and push to test
+===============================================================
+```
+
+### 추가 정보 필요 시:
+```
+===============================================================
+[WORKFLOW_STATUS]
+status: DECISION_NEEDED
+context: Need more information to diagnose
+next_hint: provide error logs or GitHub Actions URL
+===============================================================
+```
+
+---
+
 ## 결과 보고 형식
 
 ### 진단 완료
 
 ```
-═══════════════════════════════════════════════════════════════
-🔧 CI DIAGNOSIS COMPLETE
-═══════════════════════════════════════════════════════════════
+===============================================================
+CI DIAGNOSIS COMPLETE
+===============================================================
 
-📋 ISSUE
+ISSUE
 - Workflow: ci-windows.yml
 - Step: Build with CMake
 - Error: Qt6 not found
 
-🔍 ROOT CAUSE
+ROOT CAUSE
 vcpkg cache was invalidated due to vcpkg.json change.
 Qt6 installation timed out.
 
-💡 PROPOSED FIX
+PROPOSED FIX
 1. Update cache key version in workflow
 2. Increase timeout for vcpkg install step
 
+===============================================================
 [WORKFLOW_STATUS]
-Status: READY
-═══════════════════════════════════════════════════════════════
+status: READY
+context: CI diagnosis complete - fix proposed
+next_hint: apply fix with "CI 수정"
+===============================================================
 ```
 
 ### 수정 완료
 
 ```
-═══════════════════════════════════════════════════════════════
-✅ CI FIX APPLIED
-═══════════════════════════════════════════════════════════════
+===============================================================
+CI FIX APPLIED
+===============================================================
 
-📝 CHANGES
+CHANGES
 - .github/workflows/ci-windows.yml
-  - Updated cache key version: v3 → v4
-  - Increased timeout: 60min → 90min
+  - Updated cache key version: v3 -> v4
+  - Increased timeout: 60min -> 90min
 
-📋 NEXT STEPS
+NEXT STEPS
 1. Commit and push to branch
 2. Monitor GitHub Actions
 
+===============================================================
 [WORKFLOW_STATUS]
-Status: READY
-═══════════════════════════════════════════════════════════════
+status: READY
+context: CI fix applied
+next_hint: commit and push to test
+===============================================================
 ```
 
 ---
@@ -216,22 +248,22 @@ Status: READY
 
 ### 진단 후:
 ```
-═══════════════════════════════════════════════════════════════
-📋 NEXT STEPS:
-───────────────────────────────────────────────────────────────
-▶ "fix it" / "수정해줘"        → 제안된 수정 적용
-▶ "more details" / "상세"      → 더 깊은 분석
-▶ "show workflow"              → 전체 워크플로우 파일 표시
-═══════════════════════════════════════════════════════════════
+===============================================================
+NEXT STEPS:
+---------------------------------------------------------------
+> "fix it" / "수정해줘"        -> 제안된 수정 적용
+> "more details" / "상세"      -> 더 깊은 분석
+> "show workflow"              -> 전체 워크플로우 파일 표시
+===============================================================
 ```
 
 ### 수정 적용 후:
 ```
-═══════════════════════════════════════════════════════════════
-📋 NEXT STEPS:
-───────────────────────────────────────────────────────────────
-▶ "commit"                     → 수정 커밋
-▶ "check other workflows"      → 다른 플랫폼 워크플로우 확인
-▶ "optimize CI"                → 최적화 제안
-═══════════════════════════════════════════════════════════════
+===============================================================
+NEXT STEPS:
+---------------------------------------------------------------
+> "commit"                     -> 수정 커밋
+> "check other workflows"      -> 다른 플랫폼 워크플로우 확인
+> "optimize CI"                -> 최적화 제안
+===============================================================
 ```

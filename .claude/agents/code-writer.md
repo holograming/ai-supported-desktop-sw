@@ -44,12 +44,12 @@ skills: cpp-qml-coding, testing-procedures
    > 코딩 컨벤션 불확실 시 `.claude/skills/cpp-qml-coding/SKILL.md` 참조
 
 3. **구현 순서:**
-   
+
    **C++ 먼저:**
    - 헤더 파일 (.h) 작성
    - 구현 파일 (.cpp) 작성
    - CMakeLists.txt 업데이트
-   
+
    **QML 다음:**
    - QML 컴포넌트 작성
    - qmldir 업데이트 (필요시)
@@ -62,20 +62,7 @@ skills: cpp-qml-coding, testing-procedures
 5. **tasks.md 체크박스 업데이트:**
    - 완료된 항목 [x]로 변경
 
-6. **보고:**
-   ```
-   구현 완료: OpenSpec #NNNNN
-   
-   새 파일:
-   - src/core/user_service.h
-   - src/core/user_service.cpp
-   - qml/components/UserCard.qml
-   
-   테스트:
-   - tests/test_user_service.cpp (15 assertions)
-   
-   다음 단계: code-reviewer가 리뷰
-   ```
+6. **보고 및 상태 출력**
 
 ---
 
@@ -97,22 +84,22 @@ class UserService : public QObject
 {
     Q_OBJECT
     QML_ELEMENT
-    
+
     Q_PROPERTY(bool loading READ isLoading NOTIFY loadingChanged)
-    
+
 public:
     explicit UserService(QObject* parent = nullptr);
     ~UserService() override = default;
-    
+
     [[nodiscard]] bool isLoading() const { return m_loading; }
-    
+
     Q_INVOKABLE void fetchUsers();
-    
+
 signals:
     void loadingChanged();
     void usersFetched(const QVariantList& users);
     void errorOccurred(const QString& message);
-    
+
 private:
     bool m_loading{false};
 };
@@ -136,7 +123,7 @@ void UserService::fetchUsers()
 {
     m_loading = true;
     emit loadingChanged();
-    
+
     // Implementation...
 }
 
@@ -156,25 +143,25 @@ import QtQuick.Layouts
 
 Item {
     id: root
-    
+
     // Public properties
     required property string userName
     property string userEmail: ""
-    
+
     // Signals
     signal clicked()
     signal editRequested()
-    
+
     // Size
     implicitWidth: 300
     implicitHeight: 80
-    
+
     // Content
     RowLayout {
         anchors.fill: parent
         anchors.margins: 12
         spacing: 16
-        
+
         // Avatar
         Rectangle {
             Layout.preferredWidth: 48
@@ -182,31 +169,31 @@ Item {
             radius: 24
             color: Material.primary
         }
-        
+
         // Info
         ColumnLayout {
             Layout.fillWidth: true
             spacing: 4
-            
+
             Label {
                 text: root.userName
                 font.bold: true
             }
-            
+
             Label {
                 text: root.userEmail
                 font.pixelSize: 12
                 opacity: 0.7
             }
         }
-        
+
         // Edit button
         Button {
             text: "Edit"
             onClicked: root.editRequested()
         }
     }
-    
+
     // Click handler
     MouseArea {
         anchors.fill: parent
@@ -243,13 +230,39 @@ qt_add_qml_module(${PROJECT_NAME}
 
 ---
 
+## WORKFLOW STATUS OUTPUT
+
+**모든 응답 끝에 반드시 다음 형식으로 상태를 출력합니다:**
+
+### 구현 완료 시 (빌드 성공):
+```
+===============================================================
+[WORKFLOW_STATUS]
+status: READY
+context: Implementation complete - N files created, build successful
+next_hint: code-reviewer should review
+===============================================================
+```
+
+### 구현 중 문제 발생 시:
+```
+===============================================================
+[WORKFLOW_STATUS]
+status: BLOCKED
+context: Build failed or implementation issue
+next_hint: fix issues before proceeding
+===============================================================
+```
+
+---
+
 ## NEXT STEPS
 
 ```
-═══════════════════════════════════════════════════════════════
-📋 NEXT STEPS:
-───────────────────────────────────────────────────────────────
-▶ "리뷰" / "review"     → Code-reviewer가 코드 리뷰
-▶ "status"              → 진행상황 확인
-═══════════════════════════════════════════════════════════════
+===============================================================
+NEXT STEPS:
+---------------------------------------------------------------
+> "리뷰" / "review"     -> Code-reviewer가 코드 리뷰
+> "status"              -> 진행상황 확인
+===============================================================
 ```

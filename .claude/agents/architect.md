@@ -54,13 +54,13 @@ skills: cpp-qml-coding
    - 새 모델 생성?
 
 4. **UI 필요 여부 결정:**
-   
+
    **UI 필요한 경우:**
    - 새 화면/페이지 추가
    - 새 QML 컴포넌트 생성
    - 기존 UI 수정
    - 사용자 상호작용 변경
-   
+
    **UI 불필요한 경우:**
    - 순수 비즈니스 로직
    - 백엔드 API
@@ -77,42 +77,31 @@ skills: cpp-qml-coding
 6. **OpenSpec proposal.md에 Design 섹션 추가:**
    ```markdown
    ## Design
-   
+
    ### UI 필요 여부
    - [ ] UI 작업 필요 (designer 에이전트 호출)
    - [x] UI 작업 불필요 (code-writer로 직행)
-   
+
    ### 수정할 파일
    - `src/core/user_model.cpp` - 새 메서드 추가
    - `qml/pages/UserPage.qml` - UI 바인딩 추가
-   
+
    ### 새 파일
    - `src/core/user_service.h`
    - `src/core/user_service.cpp`
-   
+
    ### 클래스 구조
    - UserService
      - m_userModel : UserModel*
      - fetchUsers() : void
      - onUsersFetched() : slot
-   
+
    ### 패턴
    - Q_PROPERTY for QML binding
    - Signal/Slot for async operations
    ```
 
-7. **보고 및 다음 단계 제안:**
-   ```
-   설계 완료: OpenSpec #NNNNN
-   
-   수정할 파일: 2개
-   새 파일: 2개
-   메인 클래스: UserService
-   
-   UI 필요 여부: [예/아니오]
-   
-   다음 단계: [designer/code-writer]
-   ```
+7. **보고 및 상태 출력**
 
 ---
 
@@ -151,20 +140,46 @@ Grep("import.*ComponentName", path="qml")
 
 ---
 
+## WORKFLOW STATUS OUTPUT
+
+**모든 응답 끝에 반드시 다음 형식으로 상태를 출력합니다:**
+
+### 설계 완료 시:
+```
+===============================================================
+[WORKFLOW_STATUS]
+status: READY
+context: Design complete - UI needed/not needed
+next_hint: designer/code-writer should proceed
+===============================================================
+```
+
+### 분석 중 문제 발견 시:
+```
+===============================================================
+[WORKFLOW_STATUS]
+status: BLOCKED
+context: Cannot proceed - missing requirements or conflicts
+next_hint: resolve issues with task-manager
+===============================================================
+```
+
+---
+
 ## NEXT STEPS
 
 **UI 필요 판단 후:**
 
 ```
-═══════════════════════════════════════════════════════════════
+===============================================================
 NEXT STEPS - UI 필요 여부에 따라 선택:
-───────────────────────────────────────────────────────────────
+---------------------------------------------------------------
 [UI 필요]
-▶ "UI 디자인" / "design UI"   → Designer가 UI/UX 설계
+> "UI 디자인" / "design UI"   -> Designer가 UI/UX 설계
 
 [UI 불필요]
-▶ "구현" / "implement"        → Code-writer가 코드 작성
-───────────────────────────────────────────────────────────────
-"status"                       → 진행상황 확인
-═══════════════════════════════════════════════════════════════
+> "구현" / "implement"        -> Code-writer가 코드 작성
+---------------------------------------------------------------
+"status"                       -> 진행상황 확인
+===============================================================
 ```

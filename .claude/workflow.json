@@ -1,7 +1,7 @@
 {
   "workflow": {
     "name": "openspec-qt-workflow",
-    "version": "1.0",
+    "version": "1.1",
     "description": "OpenSpec 기반 C++/QML 프로젝트 워크플로우",
 
     "triggers": {
@@ -109,6 +109,212 @@
       ]
     },
 
+    "protocol": {
+      "status_block_marker": "[WORKFLOW_STATUS]",
+      "valid_statuses": ["READY", "BLOCKED", "FAILED", "DECISION_NEEDED"],
+      "fallback_patterns": {
+        "READY": "(완료|complete|success|pass|APPROVE)",
+        "BLOCKED": "(실패|fail|error|issue|block)",
+        "FAILED": "(critical|fatal|cannot proceed)"
+      },
+      "pattern_priority": ["FAILED", "BLOCKED", "READY"],
+      "fallback_search_lines": 10
+    },
+
+    "prompt_injection": {
+      "enabled": true
+    },
+
+    "rules": [
+      {
+        "id": "session_restore",
+        "description": "세션 시작 시 자동 복원",
+        "priority": 100,
+        "trigger": {
+          "type": "session_start"
+        },
+        "action": {
+          "agent": "task-manager",
+          "mode": "session_restore",
+          "prompt": "session-state.json을 읽고 세션 상태를 표시. 계속할지 새 태스크를 시작할지 질문."
+        }
+      },
+      {
+        "id": "initial",
+        "description": "워크플로우 시작은 task-manager",
+        "trigger": {
+          "type": "start"
+        },
+        "action": {
+          "agent": "task-manager",
+          "prompt_mode": "passthrough"
+        }
+      },
+      {
+        "id": "task_to_architect",
+        "description": "태스크 생성/계속 후 architect 실행",
+        "trigger": {
+          "agent": "task-manager",
+          "status": "READY",
+          "context_excludes": "DEPLOYED|closed|complete"
+        },
+        "action": {
+          "agent": "architect",
+          "prompt": "OpenSpec을 기반으로 분석 및 설계. Context: {context}"
+        }
+      },
+      {
+        "id": "architect_decision",
+        "description": "설계 완료 후 UI 필요 여부 판단",
+        "trigger": {
+          "agent": "architect",
+          "status": "READY"
+        },
+        "action": {
+          "type": "decision",
+          "message": "설계 완료. UI 작업이 필요한가요?",
+          "options": [
+            {
+              "key": "1",
+              "label": "UI 필요 (designer)",
+              "agent": "designer"
+            },
+            {
+              "key": "2",
+              "label": "UI 불필요 (code-writer)",
+              "agent": "code-writer"
+            }
+          ],
+          "prompt_template": "설계에 따라 구현. Context: {context}"
+        }
+      },
+      {
+        "id": "designer_to_writer",
+        "description": "디자인 완료 후 구현",
+        "trigger": {
+          "agent": "designer",
+          "status": "READY"
+        },
+        "action": {
+          "agent": "code-writer",
+          "prompt": "디자인 명세에 따라 구현. Context: {context}"
+        }
+      },
+      {
+        "id": "implementation_to_review",
+        "description": "구현 완료 후 코드 리뷰",
+        "trigger": {
+          "agent": "code-writer",
+          "status": "READY"
+        },
+        "action": {
+          "agent": "code-reviewer",
+          "prompt": "구현된 코드 리뷰"
+        }
+      },
+      {
+        "id": "editor_to_review",
+        "description": "코드 수정 완료 후 코드 리뷰",
+        "trigger": {
+          "agent": "code-editor",
+          "status": "READY"
+        },
+        "action": {
+          "agent": "code-reviewer",
+          "prompt": "수정된 코드 리뷰"
+        }
+      },
+      {
+        "id": "review_blocked_loop",
+        "description": "리뷰에서 이슈 발견 시 수정",
+        "trigger": {
+          "agent": "code-reviewer",
+          "status": "BLOCKED"
+        },
+        "action": {
+          "agent": "code-editor",
+          "prompt": "리뷰 이슈 수정: {context}",
+          "on_complete": "editor_to_review"
+        },
+        "retry": {
+          "max": 3,
+          "on_exhausted": {
+            "type": "ask_user",
+            "message": "리뷰 루프 3회 초과. 수동 개입 필요."
+          }
+        }
+      },
+      {
+        "id": "review_to_tests",
+        "description": "리뷰 통과 후 테스트",
+        "trigger": {
+          "agent": "code-reviewer",
+          "status": "READY"
+        },
+        "action": {
+          "agent": "tester",
+          "prompt": "빌드 및 테스트 실행"
+        }
+      },
+      {
+        "id": "tests_blocked_loop",
+        "description": "테스트 실패 시 수정",
+        "trigger": {
+          "agent": "tester",
+          "status": "BLOCKED"
+        },
+        "action": {
+          "agent": "code-editor",
+          "prompt": "테스트 실패 수정: {context}",
+          "on_complete": "review_to_tests"
+        },
+        "retry": {
+          "max": 3,
+          "on_exhausted": {
+            "type": "ask_user",
+            "message": "테스트 수정 루프 3회 초과."
+          }
+        }
+      },
+      {
+        "id": "tests_to_close",
+        "description": "테스트 통과 후 태스크 종료",
+        "trigger": {
+          "agent": "tester",
+          "status": "READY"
+        },
+        "action": {
+          "agent": "task-manager",
+          "prompt": "태스크 종료 - 모든 검사 통과"
+        }
+      },
+      {
+        "id": "workflow_complete",
+        "description": "태스크 종료, 워크플로우 완료",
+        "trigger": {
+          "agent": "task-manager",
+          "status": "READY",
+          "context_contains": "DEPLOYED|closed|complete"
+        },
+        "action": {
+          "type": "complete",
+          "message": "워크플로우 완료!"
+        }
+      },
+      {
+        "id": "devops_complete",
+        "description": "DevOps 작업 완료 (독립 워크플로우)",
+        "trigger": {
+          "agent": "devops",
+          "status": "READY"
+        },
+        "action": {
+          "type": "complete",
+          "message": "CI/CD 작업 완료!"
+        }
+      }
+    ],
+
     "auto_actions": {
       "auto_commit": {
         "patterns": [
@@ -135,6 +341,12 @@
         ],
         "action": "자동 세션 저장"
       }
+    },
+
+    "limits": {
+      "max_workflow_iterations": 20,
+      "max_retries_per_rule": 3,
+      "agent_timeout_seconds": 300
     }
   }
 }
