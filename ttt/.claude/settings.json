@@ -1,0 +1,32 @@
+{
+  "agents": {
+    "directory": ".claude/agents",
+    "available": [
+      "task-manager",
+      "architect",
+      "designer",
+      "code-writer",
+      "code-editor",
+      "code-reviewer",
+      "tester",
+      "devops"
+    ]
+  },
+  "workflow": {
+    "configFile": ".claude/workflow.json",
+    "sessionFile": ".claude/session-state.json"
+  },
+   "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/validate_triggers.py"
+          }
+        ]
+      }
+    ]
+  }
+}
