@@ -1,6 +1,0 @@
-/Users/devman/Dev/cpp-claude/openspec-qt/toss-pos/build/toss-pos_autogen/include/../GQ6NBGVJMG/moc_order_service.cpp.json
-/Users/devman/Dev/cpp-claude/openspec-qt/toss-pos/build/toss-pos_autogen/include/../GQ6NBGVJMG/moc_report_service.cpp.json
-/Users/devman/Dev/cpp-claude/openspec-qt/toss-pos/build/toss-pos_autogen/include/../M4YTXQ7V2H/moc_category_model.cpp.json
-/Users/devman/Dev/cpp-claude/openspec-qt/toss-pos/build/toss-pos_autogen/include/../M4YTXQ7V2H/moc_order_model.cpp.json
-/Users/devman/Dev/cpp-claude/openspec-qt/toss-pos/build/toss-pos_autogen/include/../M4YTXQ7V2H/moc_product_model.cpp.json
-/Users/devman/Dev/cpp-claude/openspec-qt/toss-pos/build/toss-pos_autogen/include/../M7KQ2GL7XF/moc_db_manager.cpp.json

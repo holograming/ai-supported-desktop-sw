@@ -16,14 +16,14 @@
     "configFile": ".claude/workflow.json",
     "sessionFile": ".claude/session-state.json"
   },
-  "hooks": {
+   "hooks": {
     "UserPromptSubmit": [
       {
         "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/validate_triggers.py"
+            "command": "python3 .claude/hooks/validate_triggers.py"
           }
         ]
       }

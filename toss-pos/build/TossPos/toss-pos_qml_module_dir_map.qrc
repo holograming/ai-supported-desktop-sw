@@ -1,6 +1,0 @@
-<RCC>
-  <qresource prefix="/">
-    <file alias="/">/Users/devman/Dev/cpp-claude/openspec-qt/toss-pos/build/TossPos</file>
-
-  </qresource>
-</RCC>

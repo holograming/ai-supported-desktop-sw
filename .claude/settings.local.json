@@ -9,7 +9,23 @@
       "Bash(openspec validate:*)",
       "Bash(openspec list:*)",
       "Bash(chmod:*)",
-      "Bash(git init:*)"
+      "Bash(git init:*)",
+      "Bash(tree:*)",
+      "Bash(wc:*)",
+      "Bash(cat:*)",
+      "Bash(cmake:*)",
+      "Bash(vcpkg --version:*)",
+      "Bash(where:*)",
+      "Bash(dir \"%USERPROFILE%\\\\.vcpkg\")",
+      "Bash(git --version)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Skill(vcpkg-manager)",
+      "Skill(openspec:apply)",
+      "Bash(git ls-remote:*)",
+      "Bash(ls -la \"C:\\\\Dev\\\\ai-supported-desktop-sw\\\\build-scripts\"\" && ls -la \"C:Devai-supported-desktop-swdocs\"\")",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
