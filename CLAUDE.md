@@ -57,7 +57,7 @@ OpenSpec 기반 **명세 주도 개발(Spec-Driven Development)** 템플릿입�
 | **철산** | 코드 수정자 | "수정", "변경", "fix", "refactor" | 친근함, 솔직함 |
 | **영실** | 코드 리뷰어 | "리뷰", "review", "검토" | 꼼꼼함, 친절한 안내 |
 | **사하** | UI/UX 디자이너 | "UI", "UX", "화면", "레이아웃" | 세련됨, 감각적 |
-| **로컬빌더** | C++ 빌드 자동화 전문가 | "build", "compile", "CMake", "vcpkg", "빌드 오류" | 꼼꼼함, 인내심, 문제해결 중심 |
+| **인재** | C++ 빌드 자동화 전문가 | "build", "compile", "CMake", "vcpkg", "빌드 오류" | 꼼꼼함, 인내심, 문제해결 중심 |
 | **지평** | 테스터 | "테스트", "test", "실행", "검증" | 날카로운 안목, 츤데레 |
 | **인재** | DevOps | "CI", "CD", "pipeline", "deploy" | 현실주의, 프로페셔널 |
 
@@ -181,6 +181,77 @@ OpenSpec 기반 **명세 주도 개발(Spec-Driven Development)** 템플릿입�
 
 **참조 경로:** `.claude/skills/mordern-cmake/`
 
+### session-protocol 스킬
+
+**언제 참조하는가:**
+- 세션 상태 저장/복원
+- 블로커 추적 및 자동 감지
+- 세션 무결성 검증
+
+**참조 경로:** `.claude/skills/session-protocol/`
+
+### openspec-init 스킬
+
+**언제 참조하는가:**
+- 새 OpenSpec 변경 초기화 (`/openspec:init`)
+- proposal.md, tasks.md 자동 생성
+- 기존 OpenSpec 감지 및 스킵
+
+**참조 경로:** `.claude/skills/openspec-init/`
+
+### project-scaffolding 스킬
+
+**언제 참조하는가:**
+- 새 C++/QML 프로젝트 생성
+- 표준 디렉토리 구조 스캐폴딩
+- CMakeLists.txt, CMakePresets.json, vcpkg.json 템플릿
+
+**참조 경로:** `.claude/skills/project-scaffolding/`
+
+---
+
+## 병렬 에이전트 실행
+
+워크플로우 오케스트레이터는 Git worktree를 사용한 병렬 에이전트 실행을 지원합니다.
+
+### 활성화
+
+```bash
+# CLI에서 --parallel 플래그 사용
+python -m orchestrator.main --parallel "병렬 태스크"
+
+# 또는 workflow.json에서 설정
+"parallel": {
+  "enabled": true,
+  "max_concurrent_agents": 4
+}
+```
+
+### 병렬 실행 조건
+
+다음 조건을 모두 만족할 때 병렬 실행 가능:
+- 명시적 의존성 없음
+- 수정 파일 교집합 없음
+- 에이전트 체인이 독립적
+
+### 병렬 가능 에이전트
+
+| 에이전트 | 병렬 가능 | 항상 순차 |
+|---------|----------|----------|
+| code-writer | ✓ | → code-reviewer |
+| code-editor | ✓ | - |
+| code-reviewer | ✓ | - |
+| cpp-builder | ✓ | → tester |
+
+### 브랜치 전략
+
+```
+main
+├── parallel/{change-id}/code-writer
+├── parallel/{change-id}/code-reviewer
+└── parallel/{change-id}/cpp-builder
+```
+
 ---
 
 ## 세션 연속성
@@ -199,7 +270,20 @@ OpenSpec 기반 **명세 주도 개발(Spec-Driven Development)** 템플릿입�
 
 ```bash
 /session:load          # 이전 세션 복원
+/session:load --resume # 자동 재개 (블로커 자동 복구 시도)
 ```
+
+### 블로커 자동 감지
+
+세션에서 블로커가 감지되면 자동으로 기록됩니다:
+
+| 블로커 타입 | 자동 감지 | 복구 담당 |
+|------------|----------|-----------|
+| `build_error` | ✓ | cpp-builder |
+| `test_failure` | ✓ | tester → code-editor |
+| `dependency` | ✓ | cpp-builder (vcpkg) |
+| `ci_failure` | ✓ | devops |
+| `merge_conflict` | ✓ | 수동 해결 |
 
 ### 저장 시점 가이드
 
@@ -409,7 +493,17 @@ openspec/
 
 ## 참고 자료
 
+### 문서
 - OpenSpec 상세: `openspec/AGENTS.md`
 - 프로젝트 규칙: `openspec/project.md`
-- 에이전트 상세: `.claude/agents/`
-- 스킬 참조: `.claude/skills/`
+
+### 스펙
+- Orchestration: `openspec/specs/orchestration/spec.md`
+- Session Management: `openspec/specs/session-management/spec.md`
+- Parallel Agents: `openspec/specs/parallel-agents/spec.md`
+- Project Scaffolding: `openspec/specs/project-scaffolding/spec.md`
+
+### 구현
+- 에이전트 정의: `.claude/agents/`
+- 스킬 정의: `.claude/skills/`
+- 오케스트레이터: `.claude/orchestrator/`

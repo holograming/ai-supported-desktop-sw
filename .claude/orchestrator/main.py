@@ -6,10 +6,12 @@ Usage:
     python -m orchestrator.main "new task - user service"
     python -m orchestrator.main --mock "test task"
     python -m orchestrator.main --verbose --mock "test"
+    python -m orchestrator.main --parallel "parallel test"
 
 Requirements:
     - Python 3.8+
     - claude-agent-sdk (optional, for real agent execution)
+    - git (for parallel execution with worktrees)
 """
 
 import argparse
@@ -24,6 +26,8 @@ from .protocol import StatusParser, PromptInjector, WorkflowStatus
 from .engine import RuleEngine, RuleMatch
 from .state import WorkflowState
 from .runner import AgentRunner
+from .parallel_runner import ParallelRunner, DependencyGraph, TaskNode, AgentTask
+from .worktree_manager import WorktreeManager
 from .ui import WorkflowUI
 
 
@@ -57,16 +61,19 @@ class WorkflowOrchestrator:
         config: Dict[str, Any],
         mock: bool = False,
         verbose: bool = False,
+        parallel: bool = False,
     ):
         self.project_dir = project_dir
         self.config = config.get("workflow", config)
         self.mock = mock
         self.verbose = verbose
+        self.parallel = parallel
 
         protocol_config = self.config.get("protocol", {})
         limits_config = self.config.get("limits", {})
         rules = self.config.get("rules", [])
         injection_config = self.config.get("prompt_injection", {})
+        parallel_config = self.config.get("parallel", {})
 
         self.parser = StatusParser(protocol_config)
         self.injector = PromptInjector(enabled=injection_config.get("enabled", True))
@@ -80,9 +87,24 @@ class WorkflowOrchestrator:
         )
         self.ui = WorkflowUI(use_colors=True)
 
+        # Initialize parallel runner if enabled
+        if parallel or parallel_config.get("enabled", False):
+            self.parallel = True
+            self.worktree_manager = WorktreeManager(project_dir)
+            self.parallel_runner = ParallelRunner(
+                project_dir=project_dir,
+                runner=self.runner,
+                worktree_manager=self.worktree_manager,
+                max_parallel=parallel_config.get("max_concurrent_agents", 4),
+            )
+        else:
+            self.worktree_manager = None
+            self.parallel_runner = None
+
     async def run(self, initial_prompt: str) -> bool:
         mode_str = "MOCK MODE" if self.mock else "SDK MODE"
-        self.ui.print_header(f"OPENSPEC-QT WORKFLOW ORCHESTRATOR ({mode_str})")
+        parallel_str = " | PARALLEL" if self.parallel else ""
+        self.ui.print_header(f"OPENSPEC-QT WORKFLOW ORCHESTRATOR ({mode_str}{parallel_str})")
 
         session_file = self.project_dir / ".claude" / "session-state.json"
         session_file_exists = session_file.exists()
@@ -235,12 +257,15 @@ Examples:
     python -m orchestrator.main "new task - user service"
     python -m orchestrator.main --mock "test task"
     python -m orchestrator.main --verbose --mock "test"
+    python -m orchestrator.main --parallel --mock "parallel test"
         """,
     )
 
     parser.add_argument("prompt", nargs="?", help="Initial task description")
     parser.add_argument("--mock", action="store_true", help="Use mock mode")
     parser.add_argument("--verbose", "-v", action="store_true", help="Verbose output")
+    parser.add_argument("--parallel", "-p", action="store_true",
+                        help="Enable parallel agent execution with git worktrees")
     parser.add_argument("--config", type=Path, default=None, help="Path to workflow.json")
     parser.add_argument("--project-dir", type=Path, default=None, help="Project directory")
 
@@ -289,6 +314,7 @@ Examples:
         config=config,
         mock=args.mock,
         verbose=args.verbose,
+        parallel=args.parallel,
     )
 
     success = asyncio.run(orchestrator.run(prompt))

@@ -360,6 +360,25 @@
       "max_workflow_iterations": 20,
       "max_retries_per_rule": 3,
       "agent_timeout_seconds": 300
+    },
+
+    "parallel": {
+      "enabled": false,
+      "max_concurrent_agents": 4,
+      "worktree_dir": ".worktrees",
+      "branch_prefix": "parallel",
+      "auto_merge": true,
+      "conflict_resolution": "abort",
+      "parallel_capable_agents": [
+        "code-writer",
+        "code-editor",
+        "code-reviewer",
+        "cpp-builder"
+      ],
+      "always_sequential": [
+        ["code-writer", "code-reviewer"],
+        ["cpp-builder", "tester"]
+      ]
     }
   }
 }

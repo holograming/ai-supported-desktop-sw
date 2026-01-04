@@ -50,40 +50,42 @@
 **참조**: design.md 참조 필요
 
 ### 6.1 설계
-- [ ] 6.1.1 design.md 완성: Git worktree 아키텍처 설계
-- [ ] 6.1.2 의존성 그래프 모델링
-- [ ] 6.1.3 브랜치 전략 정의
-- [ ] 6.1.4 충돌 해결 정책 문서화
+- [x] 6.1.1 design.md 완성: Git worktree 아키텍처 설계
+- [x] 6.1.2 의존성 그래프 모델링
+- [x] 6.1.3 브랜치 전략 정의
+- [x] 6.1.4 충돌 해결 정책 문서화
 
 ### 6.2 구현
-- [ ] 6.2.1 parallel_runner.py 신규 모듈 구현
-- [ ] 6.2.2 worktree 생성/삭제 유틸리티
-- [ ] 6.2.3 태스크 의존성 그래프 파서
-- [ ] 6.2.4 병렬 실행 상태 추적
-- [ ] 6.2.5 결과 머지 및 충돌 감지
+- [x] 6.2.1 parallel_runner.py 신규 모듈 구현
+- [x] 6.2.2 worktree 생성/삭제 유틸리티
+- [x] 6.2.3 태스크 의존성 그래프 파서
+- [x] 6.2.4 병렬 실행 상태 추적
+- [x] 6.2.5 결과 머지 및 충돌 감지
 
 ### 6.3 통합
-- [ ] 6.3.1 workflow.json에 parallel_mode 옵션 추가
-- [ ] 6.3.2 main.py에 병렬 실행 플래그 추가 (--parallel)
-- [ ] 6.3.3 UI에 병렬 상태 표시 추가
+- [x] 6.3.1 workflow.json에 parallel_mode 옵션 추가
+- [x] 6.3.2 main.py에 병렬 실행 플래그 추가 (--parallel)
+- [x] 6.3.3 UI에 병렬 상태 표시 추가
 
 ## Phase 7: Documentation & Specs
 **의존성**: 모든 구현 완료 후
 
-- [ ] 7.1 openspec/specs/orchestration/spec.md 작성
-- [ ] 7.2 openspec/specs/session-management/spec.md 작성
-- [ ] 7.3 openspec/specs/parallel-agents/spec.md 작성
-- [ ] 7.4 openspec/specs/project-scaffolding/spec.md 작성
-- [ ] 7.5 CLAUDE.md 업데이트 (새 스킬/명령어 반영)
+- [x] 7.1 openspec/specs/orchestration/spec.md 작성
+- [x] 7.2 openspec/specs/session-management/spec.md 작성
+- [x] 7.3 openspec/specs/parallel-agents/spec.md 작성
+- [x] 7.4 openspec/specs/project-scaffolding/spec.md 작성
+- [x] 7.5 CLAUDE.md 업데이트 (새 스킬/명령어 반영)
 
 ## Testing
-- [ ] T.1 workflow.json 트리거 매칭 단위 테스트
-- [ ] T.2 세션 복구 시나리오 테스트
-- [ ] T.3 병렬 실행 통합 테스트 (mock mode)
-- [ ] T.4 OpenSpec 초기화 end-to-end 테스트
+- [x] T.1 workflow.json 트리거 매칭 단위 테스트 (17 tests)
+- [x] T.2 세션 복구 시나리오 테스트 (16 tests)
+- [x] T.3 병렬 실행 통합 테스트 mock mode (22 tests)
+- [x] T.4 OpenSpec 초기화 end-to-end 테스트 (14 tests)
+
+✅ **All 69 tests passed** (0.06s)
 
 ## Final
 - [ ] F.1 코드 리뷰 통과
-- [ ] F.2 모든 테스트 통과
-- [ ] F.3 문서화 완료
-- [ ] F.4 CHANGELOG.md 업데이트
+- [x] F.2 모든 테스트 통과 ✅
+- [x] F.3 문서화 완료 ✅
+- [x] F.4 CHANGELOG.md 업데이트 ✅

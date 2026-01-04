@@ -258,3 +258,125 @@ class WorkflowUI:
 
         if len(lines) > max_lines:
             print(self._c("dim", f"    | ... ({len(lines) - max_lines} more lines)"))
+
+    # ========================================
+    # Parallel Execution UI Methods
+    # ========================================
+
+    def print_parallel_header(self, group_num: int, total_groups: int, agents: List[str]):
+        """Print parallel group execution header."""
+        print()
+        print(self._c("magenta", self.BORDER_H * 65))
+        print(self._c("bold", f"  [P] PARALLEL GROUP {group_num}/{total_groups}"))
+        print(self._c("magenta", self.BORDER_L * 65))
+        print(f"  Agents: {', '.join(self._c('cyan', a) for a in agents)}")
+        print(self._c("magenta", self.BORDER_H * 65))
+        print()
+
+    def print_parallel_task_start(self, task_id: str, agent: str, worktree_path: str = ""):
+        """Print when a parallel task starts."""
+        worktree_info = f" @ {worktree_path}" if worktree_path else ""
+        print(f"  [>>] " + self._c("cyan", agent) +
+              self._c("dim", f" ({task_id}){worktree_info}"))
+
+    def print_parallel_task_complete(self, task_id: str, agent: str, success: bool, duration: float):
+        """Print when a parallel task completes."""
+        if success:
+            icon = self._c("green", "[OK]")
+            status = self._c("green", "completed")
+        else:
+            icon = self._c("red", "[XX]")
+            status = self._c("red", "failed")
+
+        print(f"  {icon} " + self._c("cyan", agent) +
+              f" {status} ({duration:.1f}s)")
+
+    def print_parallel_summary(
+        self,
+        total_tasks: int,
+        successful: int,
+        failed: int,
+        duration: float
+    ):
+        """Print parallel execution summary."""
+        print()
+        print(self._c("magenta", self.BORDER_L * 65))
+        print(self._c("bold", "  [P] Parallel Execution Summary"))
+        print(self._c("magenta", self.BORDER_L * 65))
+
+        success_rate = (successful / total_tasks * 100) if total_tasks > 0 else 0
+
+        print(f"  Total tasks:  {total_tasks}")
+        print(f"  Successful:   " + self._c("green", str(successful)))
+        print(f"  Failed:       " + self._c("red" if failed > 0 else "dim", str(failed)))
+        print(f"  Success rate: " +
+              self._c("green" if success_rate == 100 else "yellow", f"{success_rate:.0f}%"))
+        print(f"  Duration:     {duration:.1f}s")
+        print()
+
+    def print_merge_status(self, branch: str, success: bool, conflicts: List[str] = None):
+        """Print merge status for a branch."""
+        if success:
+            print(f"  " + self._c("green", "[M]") + f" Merged: {branch}")
+        else:
+            print(f"  " + self._c("red", "[!]") + f" Merge failed: {branch}")
+            if conflicts:
+                for conflict_file in conflicts[:5]:
+                    print(self._c("red", f"      - {conflict_file}"))
+                if len(conflicts) > 5:
+                    print(self._c("dim", f"      ... and {len(conflicts) - 5} more"))
+
+    def print_conflict_report(self, conflicts: List[Dict[str, Any]]):
+        """Print detailed conflict report."""
+        print()
+        print(self._c("red", self.BORDER_H * 65))
+        print(self._c("bold", "  MERGE CONFLICT DETECTED"))
+        print(self._c("red", self.BORDER_H * 65))
+        print()
+
+        for i, conflict in enumerate(conflicts, 1):
+            file_path = conflict.get("file", "unknown")
+            branches = conflict.get("branches", ("?", "?"))
+            conflict_type = conflict.get("type", "content")
+
+            print(f"  {i}. {self._c('yellow', file_path)}")
+            print(f"     Type: {conflict_type}")
+            print(f"     Branches: {branches[0]} vs {branches[1]}")
+            print()
+
+        print(self._c("red", self.BORDER_L * 65))
+        print("  Options:")
+        print("    [1] Abort and rollback")
+        print("    [2] Manual conflict resolution")
+        print("    [3] Keep first branch changes")
+        print("    [4] Keep second branch changes")
+        print(self._c("red", self.BORDER_H * 65))
+        print()
+
+    def print_worktree_status(self, worktrees: List[Dict[str, str]]):
+        """Print status of active worktrees."""
+        print()
+        print(self._c("blue", self.BORDER_L * 65))
+        print(self._c("bold", "  [W] Active Worktrees"))
+        print(self._c("blue", self.BORDER_L * 65))
+
+        if not worktrees:
+            print(self._c("dim", "  No active worktrees"))
+        else:
+            for wt in worktrees:
+                agent = wt.get("agent", "unknown")
+                branch = wt.get("branch", "?")
+                status = wt.get("status", "unknown")
+
+                status_colors = {
+                    "created": "dim",
+                    "active": "cyan",
+                    "completed": "green",
+                    "failed": "red",
+                    "cleaned": "dim",
+                }
+                color = status_colors.get(status, "dim")
+
+                print(f"    - " + self._c("cyan", agent) +
+                      f": {branch} " + self._c(color, f"[{status}]"))
+        print()
