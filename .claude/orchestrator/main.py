@@ -46,6 +46,7 @@ class WorkflowOrchestrator:
         "code-writer",
         "code-editor",
         "code-reviewer",
+        "cpp-builder",
         "tester",
         "devops",
     ]

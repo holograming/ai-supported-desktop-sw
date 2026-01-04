@@ -86,12 +86,11 @@
       "tester": [
         "테스트",
         "test",
-        "빌드",
-        "build",
         "실행",
         "run",
         "검증",
         "verify",
+        "ctest",
         "지평"
       ],
       "devops": [
@@ -106,12 +105,20 @@
         "fix CI",
         "인재"
       ],
-      "cppbuilder": [
+      "cpp-builder": [
+        "빌드",
+        "build",
         "빌드해줘",
         "build failed",
+        "빌드 실패",
+        "빌드 오류",
         "local build",
-        "cpp build failed",
-        "알렉스"
+        "cpp build",
+        "cmake",
+        "CMake",
+        "컴파일",
+        "compile",
+        "로컬빌더"
       ]
     },
 

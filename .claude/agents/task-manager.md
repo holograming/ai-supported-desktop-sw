@@ -246,6 +246,78 @@ next_hint: resolve issues before proceeding
 
 ---
 
+---
+
+## MODE 5: OPENSPEC INITIALIZATION
+
+트리거: `/openspec:init`, "openspec 초기화", "init openspec"
+
+신규 프로젝트에 OpenSpec 구조를 초기화합니다.
+
+### 절차
+
+1. **기존 OpenSpec 감지:**
+   ```bash
+   ls openspec/project.md 2>/dev/null
+   ```
+   - 존재 → 스킵 여부 질문
+   - 없음 → 초기화 진행
+
+2. **필수 디렉토리 생성:**
+   ```bash
+   mkdir -p openspec/{specs,changes}
+   ```
+
+3. **필수 파일 생성:**
+   - `openspec/project.md` - 프로젝트 컨벤션 템플릿
+   - `openspec/AGENTS.md` - AI 에이전트 지침
+
+4. **CLAUDE.md 업데이트:**
+   - OPENSPEC:START/END 블록 추가 (없을 경우)
+
+5. **검증:**
+   ```
+   openspec validate --strict
+   ```
+
+6. **완료 보고:**
+   ```
+   ===============================================================
+   OPENSPEC INITIALIZED
+   ===============================================================
+
+   생성된 파일:
+   - openspec/project.md
+   - openspec/AGENTS.md
+   - openspec/specs/ (디렉토리)
+   - openspec/changes/ (디렉토리)
+
+   다음 단계:
+   - openspec/project.md 수정: 프로젝트 컨텍스트 채우기
+   - "새 태스크" 또는 "/openspec:proposal" 로 변경 제안 생성
+
+   ===============================================================
+   ```
+
+### 이미 존재할 경우
+
+```
+===============================================================
+OPENSPEC ALREADY EXISTS
+===============================================================
+
+openspec/project.md가 이미 존재합니다.
+
+옵션:
+[1] 기존 유지 (권장)
+[2] 덮어쓰기 (주의: 기존 설정 손실)
+[3] 취소
+
+===============================================================
+```
+
+---
+
 ## NEXT STEPS
 
 **항상 응답 끝에 다음 단계 섹션 포함:**
@@ -256,5 +328,6 @@ NEXT STEPS - 선택하세요:
 ---------------------------------------------------------------
 > "설계" / "design"     -> Architect가 분석 및 설계
 > "status"              -> 진행상황 확인
+> "/openspec:init"      -> OpenSpec 구조 초기화
 ===============================================================
 ```

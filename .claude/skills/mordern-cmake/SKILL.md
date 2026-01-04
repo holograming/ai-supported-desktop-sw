@@ -984,7 +984,65 @@ cmake --build --preset windows-debug --target clean
 
 ---
 
-## 8. Best Practices Summary
+## 8. Build Folder Convention (CRITICAL)
+
+모든 빌드 출력은 **반드시** `build/${presetName}/` 경로를 사용해야 합니다.
+
+### 규칙
+
+```
+build/
+├── windows-debug/      # Windows Debug 빌드
+│   ├── bin/            # 실행 파일
+│   └── lib/            # 라이브러리
+├── windows-release/    # Windows Release 빌드
+├── linux-debug/        # Linux Debug 빌드
+├── linux-release/      # Linux Release 빌드
+├── macos-debug/        # macOS Debug 빌드
+└── macos-release/      # macOS Release 빌드
+```
+
+### CMakePresets.json 필수 설정
+
+```json
+{
+  "name": "base",
+  "hidden": true,
+  "binaryDir": "${sourceDir}/build/${presetName}"  // ← 필수
+}
+```
+
+### CMakeLists.txt 출력 디렉토리
+
+```cmake
+# 빌드 출력 경로 (CMAKE_BINARY_DIR은 binaryDir와 동일)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+```
+
+### 금지 패턴
+
+다음 경로는 사용하지 마세요:
+- ❌ `out/build/`
+- ❌ `cmake-build-*/`
+- ❌ `Debug/`, `Release/` (루트 레벨)
+- ❌ `x64/`, `x86/`
+
+### .gitignore
+
+```gitignore
+# Build output (all presets)
+build/
+out/
+
+# vcpkg
+vcpkg_installed/
+```
+
+---
+
+## 9. Best Practices Summary
 
 1. **Always use CMakePresets.json** - Ensures consistency across team
 2. **Use Ninja generator** - Fastest, simplest, most portable
@@ -996,6 +1054,7 @@ cmake --build --preset windows-debug --target clean
 8. **Test on all platforms** - Windows, Linux, macOS
 9. **Use generator expressions** - For platform-specific settings
 10. **Document your presets** - Add displayName and description
+11. **Build folder convention** - Use `build/${presetName}/` path (Section 8)
 
 ---
 
