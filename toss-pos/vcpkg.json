@@ -1,9 +1,0 @@
-{
-  "name": "toss-pos",
-  "version": "1.0.0",
-  "description": "TossPlace POS App - Qt6/QML based Point of Sale system",
-  "dependencies": [
-    "sqlite3",
-    "spdlog"
-  ]
-}

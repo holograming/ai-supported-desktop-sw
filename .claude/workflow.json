@@ -100,12 +100,18 @@
         "pipeline",
         "GitHub Actions",
         "workflow failed",
-        "build failed",
         "deploy",
         "CI 실패",
         "CI 수정",
         "fix CI",
         "인재"
+      ],
+      "cppbuilder": [
+        "빌드해줘",
+        "build failed",
+        "local build",
+        "cpp build failed",
+        "알렉스"
       ]
     },
 

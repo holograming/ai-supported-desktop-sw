@@ -1,28 +1,15 @@
 {
   "mode": "full",
-  "saved_at": "2026-01-02T10:00:00",
-  "git_branch": "main",
-  "git_commit": "a647174",
+  "saved_at": "",
+  "git_branch": "",
+  "git_commit": "",
   "git_pushed": false,
   "openspec": null,
   "openspec_status": null,
-  "working_on": "OpenSpec #add-toss-pos-app 종료 완료",
-  "next_steps": [
-    "Git 커밋 (feat: TossPlace POS 앱 구현)",
-    "아카이브 이동 검토",
-    "새 태스크 시작"
-  ],
+  "working_on": "",
+  "next_steps": [ ],
   "blocker": null,
-  "completed_tasks": [
-    "toss-pos/ 디렉토리 생성 및 프로젝트 설정",
-    "토스 디자인 시스템 QML 컴포넌트 구현",
-    "SQLite 데이터베이스 연동",
-    "상품/카테고리/주문 모델 구현",
-    "주문/결제/매출 조회 UI 구현",
-    "비즈니스 로직 구현",
-    "통합 테스트 완료",
-    "코드 리뷰 통과 (8/10점)"
-  ],
+  "completed_tasks": [],
   "pending_tasks": [],
   "task_progress": {
     "completed": 60,
